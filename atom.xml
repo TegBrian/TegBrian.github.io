@@ -2,12 +2,11 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://tegbrian.github.io/</id>
     <title>TegBrian的博客</title>
-    <updated>2020-03-11T07:25:43.539Z</updated>
+    <updated>2020-03-11T07:36:46.899Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://tegbrian.github.io/"/>
     <link rel="self" href="https://tegbrian.github.io/atom.xml"/>
-    <subtitle>
-Powered by &lt;a href=&quot;https://www.luogu.com.cn/&quot; target=&quot;_blank&quot;&gt;任何一个伟大的思想，都有一个微不足道的开始。&lt;/a&gt;</subtitle>
+    <subtitle>把人类看成虫子的三体人似乎从来没有意识到一个事实：虫子从来没有被战胜过。</subtitle>
     <logo>https://tegbrian.github.io/images/avatar.png</logo>
     <icon>https://tegbrian.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, TegBrian的博客</rights>
