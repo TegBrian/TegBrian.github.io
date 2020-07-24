@@ -1,13 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://tegbrian.github.io/</id>
-    <title>TegBrian的博客</title>
-    <updated>2020-07-24T11:47:28.729Z</updated>
+    <title>那个电子君的博客</title>
+    <updated>2020-07-24T11:56:54.891Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://tegbrian.github.io/"/>
     <link rel="self" href="https://tegbrian.github.io/atom.xml"/>
     <subtitle>世界灿烂盛大，欢迎回家</subtitle>
     <logo>https://tegbrian.github.io/images/avatar.png</logo>
     <icon>https://tegbrian.github.io/favicon.ico</icon>
-    <rights>All rights reserved 2020, TegBrian的博客</rights>
+    <rights>All rights reserved 2020, 那个电子君的博客</rights>
+    <entry>
+        <title type="html"><![CDATA[题解 CF554A 【Kyoya and Photobooks】]]></title>
+        <id>https://tegbrian.github.io/post/ti-jie-cf554a-kyoya-and-photobooks/</id>
+        <link href="https://tegbrian.github.io/post/ti-jie-cf554a-kyoya-and-photobooks/">
+        </link>
+        <updated>2020-07-24T11:55:10.000Z</updated>
+        <content type="html"><![CDATA[<p><s>这道题好像难度评的有点过了吧</s></p>
+<h3 id="ac记录"><a href="https://www.luogu.com.cn/record/34570251">AC记录</a></h3>
+<h2 id="思路">思路</h2>
+<p>由题意得知：【字母可以加在开头或者结尾或者中间任何位置】。也就是说，这个字母可以放的位置有：（字符串+1）个。</p>
+<p>我们可以举一个例子：假设有一个字符串abc，那么字母可以放的位置有：</p>
+<figure data-type="image" tabindex="1"><img src="https://i.loli.net/2020/07/22/ClJ2xUQdhv5VcPa.png" alt="1.PNG" loading="lazy"></figure>
+<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>a</mi><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">a_1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>、<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>a</mi><mn>3</mn></msub></mrow><annotation encoding="application/x-tex">a_3</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">3</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>、<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>a</mi><mn>5</mn></msub></mrow><annotation encoding="application/x-tex">a_5</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">5</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>、<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>a</mi><mn>7</mn></msub></mrow><annotation encoding="application/x-tex">a_7</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">7</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>一共4个。</p>
+<p>通常情况下，所组成的字符串有多少种取决于能在什么位置放置字母，而字母只有26个，所以输出（字符串长度+1）$\times<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mn>26</mn><mi mathvariant="normal">就</mi><mi mathvariant="normal">行</mi><mi mathvariant="normal">了</mi><mi mathvariant="normal">。</mi><mi mathvariant="normal">但</mi><mi mathvariant="normal">是</mi><mi mathvariant="normal">题</mi><mi mathvariant="normal">目</mi><mi mathvariant="normal">又</mi><mi mathvariant="normal">说</mi><mi mathvariant="normal">：</mi><mi mathvariant="normal">【</mi><mi mathvariant="normal">注</mi><mi mathvariant="normal">意</mi><mi mathvariant="normal">”</mi><mi>a</mi><mi>a</mi><mi mathvariant="normal">”</mi><mi mathvariant="normal">只</mi><mi mathvariant="normal">算</mi><mi mathvariant="normal">一</mi><mi mathvariant="normal">次</mi><mi mathvariant="normal">】</mi><mi mathvariant="normal">，</mi><mi mathvariant="normal">新</mi><mi mathvariant="normal">放</mi><mi mathvariant="normal">的</mi><mi mathvariant="normal">字</mi><mi mathvariant="normal">母</mi><mi mathvariant="normal">可</mi><mi mathvariant="normal">能</mi><mi mathvariant="normal">是</mi></mrow><annotation encoding="application/x-tex">26就行了。但是题目又说：【注意”aa”只算一次】，新放的字母可能是</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord">2</span><span class="mord">6</span><span class="mord cjk_fallback">就</span><span class="mord cjk_fallback">行</span><span class="mord cjk_fallback">了</span><span class="mord cjk_fallback">。</span><span class="mord cjk_fallback">但</span><span class="mord cjk_fallback">是</span><span class="mord cjk_fallback">题</span><span class="mord cjk_fallback">目</span><span class="mord cjk_fallback">又</span><span class="mord cjk_fallback">说</span><span class="mord cjk_fallback">：</span><span class="mord cjk_fallback">【</span><span class="mord cjk_fallback">注</span><span class="mord cjk_fallback">意</span><span class="mord">”</span><span class="mord mathdefault">a</span><span class="mord mathdefault">a</span><span class="mord">”</span><span class="mord cjk_fallback">只</span><span class="mord cjk_fallback">算</span><span class="mord cjk_fallback">一</span><span class="mord cjk_fallback">次</span><span class="mord cjk_fallback">】</span><span class="mord cjk_fallback">，</span><span class="mord cjk_fallback">新</span><span class="mord cjk_fallback">放</span><span class="mord cjk_fallback">的</span><span class="mord cjk_fallback">字</span><span class="mord cjk_fallback">母</span><span class="mord cjk_fallback">可</span><span class="mord cjk_fallback">能</span><span class="mord cjk_fallback">是</span></span></span></span>a_1<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">或</mi><mi mathvariant="normal">者</mi><mi mathvariant="normal">是</mi></mrow><annotation encoding="application/x-tex">或者是</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0em;vertical-align:0em;"></span><span class="mord cjk_fallback">或</span><span class="mord cjk_fallback">者</span><span class="mord cjk_fallback">是</span></span></span></span>a_2$，但是这种只算一种。也就是说，只要有相同的字母，我们得减去一次，以去掉重复计算的可能性。</p>
+<p>我们会把26个字母都放进去，所以原字符串的字符都有被重复计算的可能，每个字母重复算一次，一共重复算l（字符串长度）次。最后，我们输出（l+1) <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>×</mo></mrow><annotation encoding="application/x-tex">\times</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord">×</span></span></span></span> 26<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>−</mo></mrow><annotation encoding="application/x-tex">-</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord">−</span></span></span></span>l就可以了</p>
+<h2 id="代码">代码</h2>
+<pre><code class="language-cpp">#include&lt;iostream&gt;
+#include&lt;algorithm&gt;
+#include&lt;cstdio&gt;
+#include&lt;cstring&gt;
+#include&lt;cmath&gt;
+using namespace std;
+string a;
+long long l;
+int main()
+{
+	getline(cin,a);
+	l=a.size();
+	cout&lt;&lt;26*(l+1)-l;
+	return 0;
+}
+</code></pre>
+<p>大家再见！！！</p>
+]]></content>
+    </entry>
 </feed>
