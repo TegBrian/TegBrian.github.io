@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://tegbrian.github.io/</id>
     <title>那个电子君的博客</title>
-    <updated>2020-07-24T12:23:11.555Z</updated>
+    <updated>2020-07-24T15:01:31.779Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://tegbrian.github.io/"/>
     <link rel="self" href="https://tegbrian.github.io/atom.xml"/>
@@ -10,6 +10,292 @@
     <logo>https://tegbrian.github.io/images/avatar.png</logo>
     <icon>https://tegbrian.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, 那个电子君的博客</rights>
+    <entry>
+        <title type="html"><![CDATA[题解 AT2281 【[ABC051B] Sum of Three Integers】]]></title>
+        <id>https://tegbrian.github.io/post/ti-jie-at2281-abc051b-sum-of-three-integers/</id>
+        <link href="https://tegbrian.github.io/post/ti-jie-at2281-abc051b-sum-of-three-integers/">
+        </link>
+        <updated>2020-07-24T15:01:01.000Z</updated>
+        <content type="html"><![CDATA[<h4 id="今天给大家讲一个时间复杂度为on的一个浅显易懂的好方法">今天，给大家讲一个时间复杂度为O(n)的一个浅显易懂的好方法。</h4>
+<p><a href="https://www.luogu.com.cn/record/32526466">先放出AC证明QwQ</a></p>
+<p>第一步：我们把这三个数设为x,y,z。不多讲。</p>
+<p>第二步：如果想要达到O(n)的话，就只能枚举从0到k的x（因为不能大于k），这样，y+z的和就是s-x了。</p>
+<p>第三步：因为题目中说明只有三个数，x正在枚举，知道了y和z的和，咱们又可以枚举y和z了。看到这里，应该有人会问：那这时间复杂度就不是O(n)了啊？别急，题目只要求我们输出一共有多少种方案，没说要这x,y,z的值，我们可以寻找规律，看看y+z=s-x有多少种可能性：</p>
+<p>咱们就拿样例1举例，样例1的k和s分别是2和2，那么我们的x枚举下来就是0,1,2,这样，y+z就分别等于2，1，0，y,z的可能性就如下表：</p>
+<p>这是当y+z等于2时，y和z的可能性</p>
+<figure data-type="image" tabindex="1"><img src="https://cdn.luogu.com.cn/upload/image_hosting/vhqwmha1.png?x-oss-process=image/resize,m_lfit,h_170,w_225" alt="" loading="lazy"></figure>
+<p>有3种</p>
+<hr>
+<p>这是当y+z等于1时，y和z的可能性</p>
+<figure data-type="image" tabindex="2"><img src="https://cdn.luogu.com.cn/upload/image_hosting/xz8wuh68.png?x-oss-process=image/resize,m_lfit,h_170,w_225" alt="" loading="lazy"></figure>
+<p>有2种</p>
+<hr>
+<p>这是当y+z等于0时，y和z的可能性</p>
+<figure data-type="image" tabindex="3"><img src="https://cdn.luogu.com.cn/upload/image_hosting/mlamegq9.png?x-oss-process=image/resize,m_lfit,h_170,w_225" alt="" loading="lazy"></figure>
+<p>有1种</p>
+<hr>
+<p>诶，是不是y和z的可能性就等于他们的和加上1啊，我又拿当y+z等于6时，y和z的可能性来看一看：</p>
+<figure data-type="image" tabindex="4"><img src="https://cdn.luogu.com.cn/upload/image_hosting/275j1mmr.png?x-oss-process=image/resize,m_lfit,h_170,w_225" alt="" loading="lazy"></figure>
+<p>有7种</p>
+<hr>
+<p>好像还真是呢！</p>
+<p>这样我们把这些可能性的和加起来，不就完事了？？</p>
+<p>慢着！y和z必须≤k呀！</p>
+<p>于是就有了第四步：</p>
+<p>你们数一数，在上面我举的例当中，假设k=4；s=6；x=0的时候，y和z≤k（也就是4)的可能性有多少个？（参考上面那个当y+z等于6时，y和z的可能性的表），emm，答案是……3个（2，4；3，3；4，2；）！</p>
+<p>那么再来，当k=3；s=5；x=1的时候，y+z就等于4，于是就有下面的可能性：</p>
+<figure data-type="image" tabindex="5"><img src="https://cdn.luogu.com.cn/upload/image_hosting/4ze0cv7k.png?x-oss-process=image/resize,m_lfit,h_170,w_225" alt="" loading="lazy"></figure>
+<p>则有2组是符合标准的（小于等于k的）</p>
+<p>诶，我们好像又找到一个规律：当y+z的和大于k的时候，他们合法的可能性就是他们一共的可能性再减去y+z的和于k差的两倍啊，转换成数学表达就是：</p>
+<h4 id="一共的可能性-yz-k2合法的可能性">一共的可能性-[（y+z）-k]*2=合法的可能性。</h4>
+<p>那么，把合法的可能性累加起来就是输出的答案啦！</p>
+<h4 id="那么就没有什么问题了上代码">那么，就没有什么问题了，上代码！</h4>
+<pre><code class="language-cpp">#include&lt;iostream&gt;
+#include&lt;algorithm&gt;
+#include&lt;cstring&gt;
+#include&lt;cstdio&gt;
+#include&lt;cmath&gt;
+long long k,s,yz,ans,t,p;//yz：y+z的和；ans：记方案的变量；t记 y+z的和与k的差；p就是一共的可能性（yz+1） 
+using namespace std;
+int main()
+{
+	cin&gt;&gt;k&gt;&gt;s;
+	for(int x=0;x&lt;=k;x++)
+	{
+		if(x&gt;s) break;//假如x比s都大，那就退出吧 
+		yz=s-x;
+		p=yz+1;
+		if(yz&lt;=k) ans+=p;
+		else
+		{
+			t=yz-k;
+			if(p-t*2&gt;=0)ans+=p-t*2;//也有可能 这个非法的可能性比一共的可能性都大，所以当一共的可能性比非法的可能性大时才执行 
+		}
+	}
+	cout&lt;&lt;ans;
+	return 0;
+}
+</code></pre>
+<h3 id="证明时间">证明时间：</h3>
+<p>也许有人会问，为什么一共的可能性一定就是他们的和+1啊，为什么一共的可能性减去[（y+z）-k]*2就等于合法的方案啊？这里给大家证明一下：</p>
+<h4 id="1-关于yz1一共的可能性的证明">1. 关于y+z+1=一共的可能性的证明</h4>
+<p>你会发现我们上面的枚举当中，y都是从0开始递增到y+z的，z都是从y+z开始递减到0的，他们一共的方案也就是这递增和递减过程中的项数！根据求项数公式：（末项-首项）/公差+1，咱们来带入进去：</p>
+<h4 id="yz-011yz11yz1">（y+z-0）/1+1=(y+z)/1+1=y+z+1，</h4>
+<p>所以（y+z+1=一共的可能性）这条等式就是成立的！</p>
+<h4 id="2-关于一共的可能性-yz-k2合法的可能性的证明">2. 关于一共的可能性-[（y+z）-k]*2=合法的可能性的证明</h4>
+<p>还是回归到y递增的问题，在枚举过程里，y分别为：</p>
+<h4 id="012yzs-x">0，1，2,……y+z（s-x），</h4>
+<p>那么，不合法（大于k的）的方案有：</p>
+<h4 id="k1k2k3yz">k+1,k+2,k+3,……,y+z，</h4>
+<p>那么，根据求项数公式，不合法的可能性有：</p>
+<h4 id="yz-k111yz-k-111yz-k-11yz-k">[y+z-(k+1)]/1+1=(y+z-k-1)/1+1=y+z-k-1+1=y+z-k，</h4>
+<p>但是，这不合法的方案只是在y上的，在z上不合法的方案还没统计，不过他们不合法的方案是一样的，所以一共的不合法的方案就是（y+z-k）*2，拿一共的可能性减去一共的不合法的方案就是合法的方案，也就是</p>
+<h4 id="一共的可能性-yz-k2合法的可能性-2">一共的可能性-[（y+z）-k]*2=合法的可能性</h4>
+<p>这条公式啦！</p>
+<h2 id="emm那就byebye啦下次见">emm，那就byebye啦，下次见！</h2>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[题解 AT1901 【ディスプレイ】]]></title>
+        <id>https://tegbrian.github.io/post/ti-jie-at1901-deisupurei/</id>
+        <link href="https://tegbrian.github.io/post/ti-jie-at1901-deisupurei/">
+        </link>
+        <updated>2020-07-24T14:59:23.000Z</updated>
+        <content type="html"><![CDATA[<p>看大家都没定数组，我就来发一波吧，可能更好理解！</p>
+<p><a href="https://www.luogu.com.cn/record/32801055">还是放出AC证明QwQ</a></p>
+<p>这题思路很简单，只要第一个显示器的高等于第二个显示器的高或宽（高旋转后可以变成宽），和第一个显示器的宽等于第二个显示器的高或宽（宽旋转后可以变成高），就判YES，否则判NO</p>
+<p><s>我在思考这到底是不是一道普及题</s></p>
+<p>接着~上代码！</p>
+<pre><code class="language-cpp">#include&lt;iostream&gt;
+#include&lt;algorithm&gt;
+#include&lt;cmath&gt;
+#include&lt;cstdio&gt;
+#include&lt;cstring&gt;
+using namespace std;
+long long a[10],b[10];//定义 
+bool ok;//定义+1 
+int main()
+{
+	cin&gt;&gt;a[1]&gt;&gt;a[2]&gt;&gt;b[1]&gt;&gt;b[2];//输入 
+	for(int i=1;i&lt;=2;i++)
+	{
+		for(int j=1;j&lt;=2;j++)
+		if(a[i]==b[j])//只要a[1]（高）等于 b[1]和b[2]（高和宽）或 a[2]（宽）等于 b[1]和b[2]就判YES 
+		{
+			ok=true;break;//直接退出 
+		}
+	}
+	if(ok) cout&lt;&lt;&quot;YES&quot;&lt;&lt;endl;//输出 
+	else cout&lt;&lt;&quot;NO&quot;&lt;&lt;endl;
+	return 0;//完美结束 
+}
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[题解 AT5366 【[ABC164C] gacha】]]></title>
+        <id>https://tegbrian.github.io/post/ti-jie-at5366-abc164c-gacha/</id>
+        <link href="https://tegbrian.github.io/post/ti-jie-at5366-abc164c-gacha/">
+        </link>
+        <updated>2020-07-24T14:58:51.000Z</updated>
+        <content type="html"><![CDATA[<p><s>我一个只会模拟的蒟蒻只会用比较低级的方法</s></p>
+<p><a href="https://www.luogu.com.cn/record/33334992">AC记录</a></p>
+<p>就拿样例1举例吧</p>
+<p>我们可以把这些字符串存在数组里：</p>
+<figure data-type="image" tabindex="1"><img src="https://cdn.luogu.com.cn/upload/image_hosting/5kpuvri0.png" alt="" loading="lazy"></figure>
+<p>然后再排一个序：</p>
+<figure data-type="image" tabindex="2"><img src="https://cdn.luogu.com.cn/upload/image_hosting/c0tm4tz0.png" alt="" loading="lazy"></figure>
+<p>由于已经排序，所以字符串相同的一定会连接在一起；</p>
+<p>那么我们可以直接用当前的下标+1来判断它的下一个字符串是否与它相同，因为排了序，所以不再担心重复计算的问题。若相同，那就用累加器加1。</p>
+<pre><code class="language-cpp">#include&lt;iostream&gt;
+#include&lt;cstdio&gt;
+#include&lt;cstring&gt;
+#include&lt;algorithm&gt;
+#include&lt;cmath&gt;
+using namespace std;
+long long n,l,ans;
+int main()
+{
+	string a[200010];
+	cin&gt;&gt;n;
+	for(int i=1;i&lt;=n;i++) cin&gt;&gt;a[i];
+	sort(a+1,a+1+n);//排序
+	for(int i=1;i&lt;=n;i++)
+	{
+		if(a[i]!=a[i+1])//若此字符串不与下一个相同，计数器+1
+		{
+			ans++;
+		}
+	}
+	cout&lt;&lt;ans&lt;&lt;endl;//输出
+}
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[题解 CF652B 【z-sort】]]></title>
+        <id>https://tegbrian.github.io/post/ti-jie-cf652b-z-sort/</id>
+        <link href="https://tegbrian.github.io/post/ti-jie-cf652b-z-sort/">
+        </link>
+        <updated>2020-07-24T14:58:26.000Z</updated>
+        <content type="html"><![CDATA[<p><a href="https://www.luogu.com.cn/record/34200263">AC记录</a></p>
+<p>这道题我们动动脑筋就行了</p>
+<h3 id="方法">方法：</h3>
+<hr>
+<p>先把数组排序，从新数组第二个开始在新数组里放原数组里最大的数，然后在后面第两个放第二大的数，以此类推，在<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>b</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">b_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.84444em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">b</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>放置<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">a</span></span></span></span>数组第<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi><mi mathvariant="normal">/</mi><mn>2</mn></mrow><annotation encoding="application/x-tex">i/2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">i</span><span class="mord">/</span><span class="mord">2</span></span></span></span>大的数（<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>b</mi></mrow><annotation encoding="application/x-tex">b</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">b</span></span></span></span>是新数组，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">a</span></span></span></span>是原数组，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi><mo>+</mo><mo>=</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">i+=2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.74285em;vertical-align:-0.08333em;"></span><span class="mord mathdefault">i</span><span class="mord">+</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span></span></span></span>）</p>
+<p>接着，从新数组第一个开始在新数组里放原数组里第一小的数，然后在后面第两个放第二小的数，以此类推，在<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>b</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">b_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.84444em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">b</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>放置<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">a</span></span></span></span>数组第<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">（</mi><mi>i</mi><mo>+</mo><mn>1</mn><mi mathvariant="normal">）</mi><mi mathvariant="normal">/</mi><mn>2</mn></mrow><annotation encoding="application/x-tex">（i+1）/2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.74285em;vertical-align:-0.08333em;"></span><span class="mord cjk_fallback">（</span><span class="mord mathdefault">i</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mord cjk_fallback">）</span><span class="mord">/</span><span class="mord">2</span></span></span></span>小的数（<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>b</mi></mrow><annotation encoding="application/x-tex">b</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault">b</span></span></span></span>是新数组，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>a</mi></mrow><annotation encoding="application/x-tex">a</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">a</span></span></span></span>是原数组，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi><mo>+</mo><mo>=</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">i+=2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.74285em;vertical-align:-0.08333em;"></span><span class="mord mathdefault">i</span><span class="mord">+</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span></span></span></span>）</p>
+<p>输出新数组</p>
+<h3 id="原因">原因：</h3>
+<hr>
+<p>其实这题不用想太复杂，题目需要我们偶数<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span></span></span></span>大于等于<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>a</mi><mrow><mi>i</mi><mo>−</mo><mn>1</mn></mrow></msub></mrow><annotation encoding="application/x-tex">a_{i-1}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.638891em;vertical-align:-0.208331em;"></span><span class="mord"><span class="mord mathdefault">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight">i</span><span class="mbin mtight">−</span><span class="mord mtight">1</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.208331em;"><span></span></span></span></span></span></span></span></span></span>，那就把大的放在偶数位，小的放在奇数位，如何也能保证题目的要求</p>
+<p><s>反正我是怎么也没想到Impossible的可能，且数据也没有，那就不管它了）</s></p>
+<h3 id="举例">举例：</h3>
+<hr>
+<p>就拿样例二举例吧</p>
+<p>原数组（a）：<br>
+<img src="https://cdn.luogu.com.cn/upload/image_hosting/kpl98h1p.png" alt="" loading="lazy"></p>
+<p>经过排序后：<br>
+<img src="https://cdn.luogu.com.cn/upload/image_hosting/munupbj0.png" alt="" loading="lazy"></p>
+<p>把较大的数放入新数组（b）：<br>
+<img src="https://cdn.luogu.com.cn/upload/image_hosting/my7t6x70.png" alt="" loading="lazy"></p>
+<p>（这里先放小的也可以）</p>
+<p>把较小的数放入新数据（b）：<br>
+<img src="https://cdn.luogu.com.cn/upload/image_hosting/0ylbn1z8.png" alt="" loading="lazy"></p>
+<h3 id="代码">代码</h3>
+<pre><code class="language-cpp">#include&lt;iostream&gt;
+#include&lt;cstdio&gt;
+#include&lt;cstring&gt;
+#include&lt;algorithm&gt;
+#include&lt;cmath&gt;
+using namespace std;
+long long n,a[1010],b[1010],s;
+int main()
+{
+	cin&gt;&gt;n;
+	for(int i=1;i&lt;=n;i++) cin&gt;&gt;a[i];
+	sort(a+1,a+1+n);
+	for(int i=2;i&lt;=n;i+=2)
+	{
+		b[i]=a[n-s];
+		s++;
+	}
+	s=0;
+	for(int i=1;i&lt;=n;i+=2)
+	{
+		s++;
+		b[i]=a[s];
+	}
+	for(int i=1;i&lt;=n;i++) cout&lt;&lt;b[i]&lt;&lt;&quot; &quot;;
+}
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[题解 CF556A 【Case of the Zeros and Ones】]]></title>
+        <id>https://tegbrian.github.io/post/ti-jie-cf556a-case-of-the-zeros-and-ones/</id>
+        <link href="https://tegbrian.github.io/post/ti-jie-cf556a-case-of-the-zeros-and-ones/">
+        </link>
+        <updated>2020-07-24T14:57:49.000Z</updated>
+        <content type="html"><![CDATA[<h3 id="ac记录"><a href="https://www.luogu.com.cn/record/34554568">AC记录</a></h3>
+<p>我提供另外一种思路哈~</p>
+<h3 id="方法">方法</h3>
+<hr>
+<ul>
+<li>
+<p>输入长度及字符串，将字符串转换成数字存入一个数组里</p>
+</li>
+<li>
+<p>统计这个数组里零和一的个数</p>
+</li>
+<li>
+<p>将数组排序</p>
+</li>
+<li>
+<p>如果全是0或全是1，就直接输出长度（n）</p>
+</li>
+<li>
+<p>否则输出：<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi><mo>−</mo><mn>2</mn><mo>∗</mo><mi>m</mi><mi>i</mi><mi>n</mi><mi mathvariant="normal">（</mi><mi>x</mi><mi mathvariant="normal">，</mi><mi>y</mi><mi mathvariant="normal">）</mi></mrow><annotation encoding="application/x-tex">n - 2 *min（x，y）</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord mathdefault">n</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">2</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">m</span><span class="mord mathdefault">i</span><span class="mord mathdefault">n</span><span class="mord cjk_fallback">（</span><span class="mord mathdefault">x</span><span class="mord cjk_fallback">，</span><span class="mord mathdefault" style="margin-right:0.03588em;">y</span><span class="mord cjk_fallback">）</span></span></span></span></p>
+</li>
+</ul>
+<p>n代表长度，x代表0的个数，y代表1的个数，min（x，y）代表x和y之间最小值</p>
+<h3 id="理由">理由</h3>
+<hr>
+<p>前四步不难理解，主要是最后一步，其实前三步都是为了铺垫最后一步的</p>
+<p>把数组排序过后，会发现0都排到了数组前面部分，1排在了数组后面部分</p>
+<p>统计过0和1的个数后，我们开始搭配0和1（不用考虑相邻，当我们移除若干组后新的自然会相邻在一起了），搭配的组数取决于0和1的个数之间的最小值（不是最大值是因为多出来的部分不可能搭配成一组）</p>
+<p>因为一组数里面有两个数字，所以2 *min（x，y）就是移除的数字个数，再用长度减取移除的数字个数，输出就搞定了</p>
+<p>其实不用排序也行，这里排序只是为了更好理解</p>
+<h3 id="代码">代码</h3>
+<pre><code class="language-cpp">#include&lt;iostream&gt;
+#include&lt;cstdio&gt;
+#include&lt;algorithm&gt;
+#include&lt;cmath&gt;
+#include&lt;cstring&gt;
+using namespace std;
+long long n,s[200010],ans,l,x,y;
+int main()
+{
+	string a;
+	cin&gt;&gt;n&gt;&gt;a;
+	ans=n;
+	l=a.size();
+	for(int i=0;i&lt;l;i++) s[i+1]=a[i]-'0';
+	sort(s+1,s+1+n);
+	for(int i=1;i&lt;=n;i++)
+	{
+		if(s[i]==0) x++;
+		if(s[i]==1) y++;
+	}
+	if(x==0||y==0) cout&lt;&lt;n;
+	else 
+	{
+		cout&lt;&lt;n-2*min(x,y);
+	}
+	return 0;
+}
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[题解 CF554A 【Kyoya and Photobooks】]]></title>
         <id>https://tegbrian.github.io/post/ti-jie-cf554a-kyoya-and-photobooks/</id>

@@ -1,8 +1,8 @@
 <html>
   <head>
-  <meta charset="utf-8" />
+    <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Gridea | 那个电子君的博客</title>
+<title>题解 AT5366 【[ABC164C] gacha】 | 那个电子君的博客</title>
 <meta name="description" content="世界灿烂盛大，欢迎回家" />
 <link rel="shortcut icon" href="https://tegbrian.github.io//favicon.ico?v=1595602881532">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
@@ -58,47 +58,80 @@
   </div>
 </div>
 
-        <div class="current-tag-container">
-            <h2 class="title">
-                标签：# Gridea
-            </h2> 
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              题解 AT5366 【[ABC164C] gacha】
+            </h2>
+            <div class="post-info">
+              <span>
+                2020-07-24
+              </span>
+              <span>
+                2 min read
+              </span>
+              
+                <a href="https://tegbrian.github.io/tag/EKyllNF47/" class="post-tag">
+                  # 题解
+                </a>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <p><s>我一个只会模拟的蒟蒻只会用比较低级的方法</s></p>
+<p><a href="https://www.luogu.com.cn/record/33334992">AC记录</a></p>
+<p>就拿样例1举例吧</p>
+<p>我们可以把这些字符串存在数组里：</p>
+<figure data-type="image" tabindex="1"><img src="https://cdn.luogu.com.cn/upload/image_hosting/5kpuvri0.png" alt="" loading="lazy"></figure>
+<p>然后再排一个序：</p>
+<figure data-type="image" tabindex="2"><img src="https://cdn.luogu.com.cn/upload/image_hosting/c0tm4tz0.png" alt="" loading="lazy"></figure>
+<p>由于已经排序，所以字符串相同的一定会连接在一起；</p>
+<p>那么我们可以直接用当前的下标+1来判断它的下一个字符串是否与它相同，因为排了序，所以不再担心重复计算的问题。若相同，那就用累加器加1。</p>
+<pre><code class="language-cpp">#include&lt;iostream&gt;
+#include&lt;cstdio&gt;
+#include&lt;cstring&gt;
+#include&lt;algorithm&gt;
+#include&lt;cmath&gt;
+using namespace std;
+long long n,l,ans;
+int main()
+{
+	string a[200010];
+	cin&gt;&gt;n;
+	for(int i=1;i&lt;=n;i++) cin&gt;&gt;a[i];
+	sort(a+1,a+1+n);//排序
+	for(int i=1;i&lt;=n;i++)
+	{
+		if(a[i]!=a[i+1])//若此字符串不与下一个相同，计数器+1
+		{
+			ans++;
+		}
+	}
+	cout&lt;&lt;ans&lt;&lt;endl;//输出
+}
+</code></pre>
+
+              </div>
+              <div class="toc-container">
+                
+              </div>
+            </div>
+          </article>
         </div>
-        <div class="post-container">
-  
-    <article class="post">
-      <a href="https://tegbrian.github.io/post/hello-gridea/">
-        <h2 class="post-title">Hello Gridea</h2>
-      </a>
-      <div class="post-info">
-        <span>
-          2018-12-12
-        </span>
-        <span>
-          2 min read
-        </span>
-        
-          <a href="https://tegbrian.github.io/tag/Z2IqSmzkm/" class="post-tag">
-            # Gridea
-          </a>
-        
-      </div>
-      
-        <a href="https://tegbrian.github.io/post/hello-gridea/" class="post-feature-image" style="background-image: url('https://tegbrian.github.io//post-images/hello-gridea.png')">
-        </a>
-      
-      <div class="post-abstract">
-        <p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
-✍️  <strong>Gridea</strong> 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
 
-      </di>
-    </article>
-  
-</div>
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://tegbrian.github.io/post/ti-jie-cf652b-z-sort/">
+              <h3 class="post-title">
+                题解 CF652B 【z-sort】
+              </h3>
+            </a>
+          </div>
+        
 
-        <div class="pagination-container">
-  
-  
-</div>
+        
 
         <div class="site-footer">
    | 

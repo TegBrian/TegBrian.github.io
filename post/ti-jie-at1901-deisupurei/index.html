@@ -1,8 +1,8 @@
 <html>
   <head>
-  <meta charset="utf-8" />
+    <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Gridea | 那个电子君的博客</title>
+<title>题解 AT1901 【ディスプレイ】 | 那个电子君的博客</title>
 <meta name="description" content="世界灿烂盛大，欢迎回家" />
 <link rel="shortcut icon" href="https://tegbrian.github.io//favicon.ico?v=1595602881532">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
@@ -58,47 +58,77 @@
   </div>
 </div>
 
-        <div class="current-tag-container">
-            <h2 class="title">
-                标签：# Gridea
-            </h2> 
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              题解 AT1901 【ディスプレイ】
+            </h2>
+            <div class="post-info">
+              <span>
+                2020-07-24
+              </span>
+              <span>
+                2 min read
+              </span>
+              
+                <a href="https://tegbrian.github.io/tag/EKyllNF47/" class="post-tag">
+                  # 题解
+                </a>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <p>看大家都没定数组，我就来发一波吧，可能更好理解！</p>
+<p><a href="https://www.luogu.com.cn/record/32801055">还是放出AC证明QwQ</a></p>
+<p>这题思路很简单，只要第一个显示器的高等于第二个显示器的高或宽（高旋转后可以变成宽），和第一个显示器的宽等于第二个显示器的高或宽（宽旋转后可以变成高），就判YES，否则判NO</p>
+<p><s>我在思考这到底是不是一道普及题</s></p>
+<p>接着~上代码！</p>
+<pre><code class="language-cpp">#include&lt;iostream&gt;
+#include&lt;algorithm&gt;
+#include&lt;cmath&gt;
+#include&lt;cstdio&gt;
+#include&lt;cstring&gt;
+using namespace std;
+long long a[10],b[10];//定义 
+bool ok;//定义+1 
+int main()
+{
+	cin&gt;&gt;a[1]&gt;&gt;a[2]&gt;&gt;b[1]&gt;&gt;b[2];//输入 
+	for(int i=1;i&lt;=2;i++)
+	{
+		for(int j=1;j&lt;=2;j++)
+		if(a[i]==b[j])//只要a[1]（高）等于 b[1]和b[2]（高和宽）或 a[2]（宽）等于 b[1]和b[2]就判YES 
+		{
+			ok=true;break;//直接退出 
+		}
+	}
+	if(ok) cout&lt;&lt;&quot;YES&quot;&lt;&lt;endl;//输出 
+	else cout&lt;&lt;&quot;NO&quot;&lt;&lt;endl;
+	return 0;//完美结束 
+}
+</code></pre>
+
+              </div>
+              <div class="toc-container">
+                
+              </div>
+            </div>
+          </article>
         </div>
-        <div class="post-container">
-  
-    <article class="post">
-      <a href="https://tegbrian.github.io/post/hello-gridea/">
-        <h2 class="post-title">Hello Gridea</h2>
-      </a>
-      <div class="post-info">
-        <span>
-          2018-12-12
-        </span>
-        <span>
-          2 min read
-        </span>
-        
-          <a href="https://tegbrian.github.io/tag/Z2IqSmzkm/" class="post-tag">
-            # Gridea
-          </a>
-        
-      </div>
-      
-        <a href="https://tegbrian.github.io/post/hello-gridea/" class="post-feature-image" style="background-image: url('https://tegbrian.github.io//post-images/hello-gridea.png')">
-        </a>
-      
-      <div class="post-abstract">
-        <p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
-✍️  <strong>Gridea</strong> 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
 
-      </di>
-    </article>
-  
-</div>
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://tegbrian.github.io/post/ti-jie-at5366-abc164c-gacha/">
+              <h3 class="post-title">
+                题解 AT5366 【[ABC164C] gacha】
+              </h3>
+            </a>
+          </div>
+        
 
-        <div class="pagination-container">
-  
-  
-</div>
+        
 
         <div class="site-footer">
    | 
